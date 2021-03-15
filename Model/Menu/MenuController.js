@@ -1,27 +1,13 @@
-const express = require("express");
 const Menu = require("./Menu");
-const router = express.Router();
+const Crud = require("../Crud/CrudController");
 
-router.get("/menu", (req, res) => {
-    return res.json(Menu.findAll())      
-})
-
-router.get("/menu/:id", (req, res) => {
+class MenuController extends Crud{
     
-    if(isNaN(req.params.id)){
-        return res.sendStatus(400)
-    } else {
-        let id = parseInt(req.params.id)
-
-        let menu = Menu.find( c => c.id == id)
-
-        if(!menu) {
-            return res.sendStatus(404)
-        }
-        res.statusCode = 200
-        return res.json(menu)
+    constructor( entity ) {
+        super( entity )
     }
-})
 
+}
 
-module.exports = router
+const menuController = new MenuController( Menu )
+module.exports = menuController

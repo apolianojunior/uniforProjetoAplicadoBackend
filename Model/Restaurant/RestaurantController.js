@@ -1,26 +1,13 @@
-const express = require("express")
-const router = express.Router();
 const Restaurant = require("./Restaurant")
+const Crud = require("../Crud/CrudController");
 
-router.get("/restaurant", (req, res) => {
-    return res.json(Restaurant.findAll())
-})
-
-router.get("/restaurant/:id", (req, res) => {
+class RestaurantController extends Crud{
     
-    if(isNaN(req.params.id)){
-        return res.sendStatus(400)
-    } else {
-        let id = parseInt(req.params.id)
-
-        let restaurant = Restaurant.find( c => c.id == id)
-
-        if(!restaurant) {
-            return res.sendStatus(404)
-        }
-        res.statusCode = 200
-        return res.json(restaurant)
+    constructor( entity ) {
+        super( entity )
     }
-})
 
-module.exports = router
+}
+
+const restaurantController = new RestaurantController( Restaurant )
+module.exports = restaurantController
