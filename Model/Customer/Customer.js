@@ -1,6 +1,6 @@
-const Sequelize = require("sequelize")
-const connection = require("../../Config/dataBaseConfig")
-const Table = require("../Table/Table")
+import Sequelize from "sequelize"
+import connection from "../../Config/DBConfig/dataBaseConfig.js"
+import Table from "../Table/Table.js"
 
 const Customer = connection.define("CUSTOMER", {
     name: {
@@ -13,4 +13,4 @@ Table.hasOne(Customer)
 
 // Customer.sync({force: true}) //Força um update no banco sempre que o sistema reiniciar
 
-module.exports = Customer
+export default Customer

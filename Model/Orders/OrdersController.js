@@ -1,5 +1,5 @@
-const Orders = require("./Orders");
-const Crud = require("../Crud/CrudController");
+import Orders from "./Orders.js"
+import Crud from "../Crud/CrudController.js"
 
 class OrdersController extends Crud{
     
@@ -10,4 +10,5 @@ class OrdersController extends Crud{
 }
 
 const ordersController = new OrdersController( Orders )
-module.exports = ordersController
+
+export default ordersController

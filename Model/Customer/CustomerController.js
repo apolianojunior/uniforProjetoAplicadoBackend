@@ -1,5 +1,5 @@
-const Customer = require("./Customer");
-const Crud = require("../Crud/CrudController");
+import Customer from "./Customer.js";
+import Crud from "../Crud/CrudController.js";
 
 class CustomerController extends Crud {
     constructor( entity ) {
@@ -8,4 +8,5 @@ class CustomerController extends Crud {
 }
 
 const customerController = new CustomerController( Customer )
-module.exports = customerController
+
+export default customerController

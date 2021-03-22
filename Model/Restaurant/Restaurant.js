@@ -1,5 +1,5 @@
-const Sequelize = require("sequelize")
-const connection = require("../../Config/dataBaseConfig")
+import Sequelize from "sequelize"
+import connection from "../../Config/DBConfig/dataBaseConfig.js"
 
 const Restaurant = connection.define("RESTAURANT", {
     name: {
@@ -15,4 +15,4 @@ const Restaurant = connection.define("RESTAURANT", {
 
 // Restaurant.sync({force: true}) //Força um update no banco sempre que o sistema reiniciar
 
-module.exports = Restaurant
+export default Restaurant

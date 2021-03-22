@@ -1,5 +1,5 @@
-const Menu = require("./Menu");
-const Crud = require("../Crud/CrudController");
+import Menu from "./Menu.js";
+import Crud from "../Crud/CrudController.js";
 
 class MenuController extends Crud{
     
@@ -10,4 +10,5 @@ class MenuController extends Crud{
 }
 
 const menuController = new MenuController( Menu )
-module.exports = menuController
+
+export default menuController

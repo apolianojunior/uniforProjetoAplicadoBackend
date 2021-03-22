@@ -9,7 +9,8 @@ class Crud {
     }
 
     async search(req, res) {
-        return res.json(await this.entity.findAll())
+        console.log(req.query)
+        return res.json(await this.entity.findAll({where: req.body}))
     }
 
     async save(req, res) {
@@ -23,6 +24,27 @@ class Crud {
     async remove(req, res) {
 
     }
+
+    async prepareForm(req, res) {
+        
+        let jsonRetorno
+        let id = req.params.id 
+        if( id ) {
+            jsonRetorno = await this._prepareEdit( id )
+        } else {
+            jsonRetorno = this._prepareNew
+        }
+
+        return res.json(jsonRetorno)
+    }
+
+    async _prepareNew() {
+        return await new this.entity()
+    }
+
+    async _prepareEdit( id ) {
+        return await this.entity.findAll({ where: { id: id}})
+    }
 }
 
-module.exports = Crud
+export default Crud

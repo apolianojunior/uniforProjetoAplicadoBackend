@@ -1,5 +1,5 @@
-const Waiter = require("./Waiter")
-const Crud = require("../Crud/CrudController");
+import Waiter from "./Waiter.js";
+import Crud from "../Crud/CrudController.js";
 
 class WaiterController extends Crud{
     
@@ -10,4 +10,5 @@ class WaiterController extends Crud{
 }
 
 const waiterController = new WaiterController( Waiter )
-module.exports = waiterController
+
+export default waiterController

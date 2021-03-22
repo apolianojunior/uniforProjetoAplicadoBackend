@@ -1,5 +1,5 @@
-const Sequelize = require("sequelize")
-const connection = require("../../Config/dataBaseConfig")
+import Sequelize from "sequelize"
+import connection from "../../Config/DBConfig/dataBaseConfig.js"
 
 const Product = connection.define("PRODUCT", {
     name: {
@@ -24,4 +24,4 @@ const Product = connection.define("PRODUCT", {
 
 // Product.sync({force: true}) //Força um update no banco sempre que o sistema reiniciar
 
-module.exports = Product
+export default Product

@@ -1,6 +1,6 @@
-const Sequelize = require("sequelize")
-const connection = require("../../Config/dataBaseConfig")
-const Waiter = require("../Waiter/Waiter")
+import Sequelize from "sequelize"
+import connection from "../../Config/DBConfig/dataBaseConfig.js"
+import Waiter from "../Waiter/Waiter.js"
 
 const Table = connection.define('TABLE', {
     number: {
@@ -14,4 +14,4 @@ Waiter.hasOne(Table)
 
 // Table.sync({force: true}) //Força um update no banco sempre que o sistema reiniciar
 
-module.exports = Table
+export default Table

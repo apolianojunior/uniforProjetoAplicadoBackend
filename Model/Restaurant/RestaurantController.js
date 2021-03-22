@@ -1,5 +1,5 @@
-const Restaurant = require("./Restaurant")
-const Crud = require("../Crud/CrudController");
+import Restaurant from "./Restaurant.js";
+import Crud from "../Crud/CrudController.js";
 
 class RestaurantController extends Crud{
     
@@ -10,4 +10,5 @@ class RestaurantController extends Crud{
 }
 
 const restaurantController = new RestaurantController( Restaurant )
-module.exports = restaurantController
+
+export default restaurantController

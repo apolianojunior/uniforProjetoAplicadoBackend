@@ -1,5 +1,5 @@
-const Table = require("./Table")
-const Crud = require("../Crud/CrudController");
+import Table from "./Table.js";
+import Crud from "../Crud/CrudController.js";
 
 class TableController extends Crud{
     
@@ -10,4 +10,5 @@ class TableController extends Crud{
 }
 
 const tableController = new TableController( Table )
-module.exports = tableController
+
+export default tableController
