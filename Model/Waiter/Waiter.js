@@ -9,6 +9,4 @@ const Waiter = connection.define('WAITER', {
 
 }) 
 
-// Waiter.sync({force: true}) //Força um update no banco sempre que o sistema reiniciar
-
 export default Waiter

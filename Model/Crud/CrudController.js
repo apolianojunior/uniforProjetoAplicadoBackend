@@ -9,20 +9,54 @@ class Crud {
     }
 
     async search(req, res) {
-        console.log(req.query)
-        return res.json(await this.entity.findAll({where: req.body}))
+        return res.json(await this.entity.findAll())
     }
 
     async save(req, res) {
-
+        try {
+            const novaEntity = await this.entity.create(req.body)
+            res.status(200)
+            res.json(novaEntity.dataValues)
+            return res
+        } catch(e) {
+            console.log(e)
+            return res.json({status: 402})
+        }
     }
 
     async update(req, res) {
+        let id = req.body.id
 
+        try {
+
+            await this.entity.update(req.body, {
+                where: {
+                    id: id
+                }
+            })
+            
+            return res.json({status: 200}) 
+        } catch(e) {
+            console.log(e)
+            return res.json({status: 402}) 
+        }   
     }
 
     async remove(req, res) {
+        let id = req.body.id
 
+        try {
+            await this.entity.destroy({
+                where: {
+                    id: id    
+                }
+            })
+
+            return res.json({status: 200})
+        } catch(e) {
+            console.log(e)
+            return res.json({status: 402})
+        }
     }
 
     async prepareForm(req, res) {

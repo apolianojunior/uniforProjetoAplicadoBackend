@@ -1,16 +1,16 @@
 import Sequelize from "sequelize"
 import connection from "../../Config/DBConfig/dataBaseConfig.js"
 
-const Restaurant = connection.define("RESTAURANT", {
+const User = connection.define("USER", {
     name: {
         type: Sequelize.STRING
     },
-    CNPJ: {
+    email: {
         type: Sequelize.STRING
     },
-    Adress: {
+    password: {
         type: Sequelize.STRING
     }
 })
 
-export default Restaurant
+export default User

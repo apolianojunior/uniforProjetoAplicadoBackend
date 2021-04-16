@@ -1,6 +1,7 @@
 import Sequelize from "sequelize"
 import connection from "../../Config/DBConfig/dataBaseConfig.js"
-
+import Category from "../Category/Category.js"
+//TODO categoria
 const Product = connection.define("PRODUCT", {
     name: {
         type: Sequelize.STRING,
@@ -9,19 +10,24 @@ const Product = connection.define("PRODUCT", {
     description: {
         type: Sequelize.TEXT,
     },
-    picture: {
+    url_photo: {
         type: Sequelize.TEXT,
     },
     price: {
         type: Sequelize.DOUBLE,
         allowNull: false
     },
-    rating: {
+    rate: {
         type: Sequelize.INTEGER,
+        allowNull: false
+    },
+    status: {
+        type: Sequelize.TINYINT,
         allowNull: false
     }
 })
 
-// Product.sync({force: true}) //Força um update no banco sempre que o sistema reiniciar
+Product.belongsTo(Category)
+Category.hasOne(Product)
 
 export default Product

@@ -1,5 +1,6 @@
 import Sequelize from "sequelize"
 import connection from "../../Config/DBConfig/dataBaseConfig.js"
+import Product from "../Product/Product.js"
 import Restaurant from "../Restaurant/Restaurant.js"
 
 const Menu = connection.define("MENU", {
@@ -8,9 +9,9 @@ const Menu = connection.define("MENU", {
     }
 })
 
+Menu.hasOne(Product)
+Product.belongsTo(Menu)
 Restaurant.hasOne(Menu)
 Menu.belongsTo(Restaurant)
-
-//Menu.sync({force: true}) //Força um update no banco sempre que o sistema reiniciar
 
 export default Menu

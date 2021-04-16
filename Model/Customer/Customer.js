@@ -8,9 +8,7 @@ const Customer = connection.define("CUSTOMER", {
     }
 })
 
-Customer.belongsTo(Table)
 Table.hasOne(Customer)
-
-// Customer.sync({force: true}) //Força um update no banco sempre que o sistema reiniciar
+Customer.belongsTo(Table)
 
 export default Customer

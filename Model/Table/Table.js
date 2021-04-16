@@ -12,6 +12,4 @@ const Table = connection.define('TABLE', {
 Table.belongsTo(Waiter)
 Waiter.hasOne(Table)
 
-// Table.sync({force: true}) //Força um update no banco sempre que o sistema reiniciar
-
 export default Table

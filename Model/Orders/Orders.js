@@ -11,16 +11,16 @@ const Orders = connection.define("ORDERS", {
     }
 })
 
-Orders.belongsTo(Product)
+
 Orders.belongsTo(Waiter)
-Orders.belongsTo(Customer)
+Orders.belongsTo(Customer, {foreignKey: {allowNull: true}})
 Orders.belongsTo(Table)
-Product.hasOne(Customer)
 Waiter.hasOne(Customer)
-Customer.hasOne(Customer)
+Customer.hasOne(Orders)
 Table.hasOne(Customer)
 
-
-// Orders.sync({force: true}) //Força um update no banco sempre que o sistema reiniciar
+const orders_users = connection.define('orders_users', {}, { timestamps: false })
+Orders.belongsToMany(Product, { through: orders_users })
+Product.belongsToMany(Orders, {through: orders_users})
 
 export default Orders
