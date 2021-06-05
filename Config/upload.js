@@ -6,6 +6,7 @@ export default {
         destination: path.join('./', 'uploads'),
         filename: (request, file, cb) => {
             const fileName = `${Date.now()}-${file.originalname}`;
+
             cb(null, fileName);
         }
     })

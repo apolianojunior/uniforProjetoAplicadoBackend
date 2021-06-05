@@ -24,6 +24,13 @@ const Product = connection.define("PRODUCT", {
     status: {
         type: Sequelize.TINYINT,
         allowNull: false
+    },
+    available: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false
+    },
+    quantity: {
+        type: Sequelize.INTEGER
     }
 })
 

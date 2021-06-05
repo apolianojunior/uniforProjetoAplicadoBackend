@@ -2,7 +2,7 @@ import Sequelize from "sequelize"
 import connection from "../../Config/DBConfig/dataBaseConfig.js"
 
 const Categorie = connection.define("CATEGORIE", {
-    descricao: {
+    description: {
         type: Sequelize.STRING
     },
     status: {

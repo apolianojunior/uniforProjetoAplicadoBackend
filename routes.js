@@ -8,18 +8,18 @@ import RestaurantController from "./Model/Restaurant/RestaurantController.js";
 import TableController from "./Model/Table/TableController.js";
 import WaiterController from "./Model/Waiter/WaiterController.js";
 import CategoryController from "./Model/Category/CategoryController.js";
-import User from "./Model/User/User.js"
-import multer from "multer"
-import confUpload from  "./Config/upload.js"
+import User from "./Model/User/User.js";
+import FeedbackController from "./Model/Feedback/FeedbackController.js";
+import multer from "multer";
+import confUpload from  "./Config/upload.js";
 
 const JWTSecret = "23a80b45f68a47r65v231x57f"
 const routes = Router()
 const upload = multer(confUpload)
 
 function auth(req, res, next) {
-    console.log(req)
     const authToken = req.headers['authorization']
-    console.log(authToken)
+
     if(authToken != undefined) {
         const bearer = authToken.split(' ')
         const token = bearer[1]
@@ -43,9 +43,8 @@ function auth(req, res, next) {
 }
 
 //USER
-routes.post("/login", async (req, res) => {
+routes.post("/signin", async (req, res) => {
     let {email, password} = req.body
-
     if( email == undefined ) {
         res.status(400)
         res.json({ err: "Email inválido"})
@@ -87,21 +86,23 @@ routes.post("/login", async (req, res) => {
 
 
 //Waiter Controller
-routes.get("/Waiter", auth, WaiterController.search.bind(WaiterController));
-routes.post("/Waiter", auth, WaiterController.save.bind(WaiterController));
-routes.put("/Waiter", auth, WaiterController.update.bind(WaiterController));
-routes.delete("/Waiter", auth,  WaiterController.remove.bind(WaiterController));
-routes.get("/Waiter/form/:id?", auth, WaiterController.prepareForm.bind(WaiterController));
+routes.get("/Waiters", WaiterController.search.bind(WaiterController));
+routes.post("/Waiters", upload.array("img"), WaiterController.save.bind(WaiterController));
+routes.put("/Waiters/:id?",upload.array("img"), WaiterController.update.bind(WaiterController));
+routes.delete("/Waiters",  WaiterController.remove.bind(WaiterController));
+routes.get("/Waiters/form/:id?", WaiterController.prepareForm.bind(WaiterController));
 
 //Category Controller
 routes.get("/Category", CategoryController.search.bind(CategoryController));
 routes.post("/Category", CategoryController.save.bind(CategoryController));
 routes.put("/Category", CategoryController.update.bind(CategoryController));
 routes.delete("/Category", CategoryController.remove.bind(CategoryController));
+routes.put("/Category/ativarOuDesativar/:id?", CategoryController.ativarOuDesativar.bind(CategoryController));
 routes.get("/Category/form/:id?", CategoryController.prepareForm.bind(CategoryController));
 
 //Table Controller
-routes.get("/Table/:params?", auth, TableController.search.bind(TableController));
+routes.get("/Table", TableController.search.bind(TableController));
+routes.get("/Table/:id?", TableController.search.bind(TableController));
 routes.post("/Table", auth, TableController.save.bind(TableController));
 routes.put("/Table", auth, TableController.update.bind(TableController));
 routes.delete("Table/:params?", auth, TableController.remove.bind(TableController));
@@ -113,15 +114,16 @@ routes.put("/Restaurant", auth, RestaurantController.update.bind(RestaurantContr
 routes.delete("Restaurant/:params?", auth, RestaurantController.remove.bind(RestaurantController));
 
 //Product Controller
-routes.get("/Product/:params?", ProductController.search.bind(ProductController));
+routes.get("/Product", ProductController.search.bind(ProductController));
+routes.get("/Product/form/:id?", ProductController.prepareForm.bind(ProductController));
 routes.post("/Product", upload.array("img"), ProductController.save.bind(ProductController));
-routes.put("/Product", ProductController.update.bind(ProductController));
-routes.delete("Product/:params?", ProductController.remove.bind(ProductController));
+routes.put("/Product/:id?", upload.array("img"), ProductController.update.bind(ProductController));
+routes.delete("/Product/:id?", ProductController.remove.bind(ProductController));
 
 //Orders Controller
-routes.get("/Orders/:params?", auth, OrdersController.search.bind(OrdersController));
+routes.get("/Orders/:id?", OrdersController.search.bind(OrdersController));
 routes.post("/Orders", auth, OrdersController.save.bind(OrdersController));
-routes.put("/Orders", auth, OrdersController.update.bind(OrdersController));
+routes.put("/Orders/:id?", OrdersController.update.bind(OrdersController));
 routes.delete("Orders/:params?", auth, OrdersController.remove.bind(OrdersController));
 
 //Menu Controller
@@ -135,5 +137,13 @@ routes.get("/Costumer/:params?", auth, CustomerController.search.bind(CustomerCo
 routes.post("/Costumer", auth, CustomerController.save.bind(CustomerController));
 routes.put("/Costumer", auth, CustomerController.update.bind(CustomerController));
 routes.delete("Costumer/:params?", auth, CustomerController.remove.bind(CustomerController));
+
+//Feedback Controller
+routes.get("/Feedbacks", FeedbackController.search.bind( FeedbackController ));
+routes.post("/Feedbacks", FeedbackController.save.bind( FeedbackController ));
+routes.put("/Feedbacks", FeedbackController.update.bind( FeedbackController ));
+routes.delete("/Feedbacks", FeedbackController.remove.bind( FeedbackController ));
+routes.put("/Feedbacks/ativarOuDesativar/:id?", FeedbackController.ativarOuDesativar.bind( FeedbackController ));
+routes.get("/Feedbacks/form/:id?", FeedbackController.prepareForm.bind( FeedbackController ));
 
 export default routes

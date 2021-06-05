@@ -25,7 +25,7 @@ class Crud {
     }
 
     async update(req, res) {
-        let id = req.body.id
+        let id = req.params.id
 
         try {
 
@@ -43,7 +43,7 @@ class Crud {
     }
 
     async remove(req, res) {
-        let id = req.body.id
+        let id = req.params.id
 
         try {
             await this.entity.destroy({
@@ -72,13 +72,44 @@ class Crud {
         return res.json(jsonRetorno)
     }
 
+    async ativarOuDesativar(req, res) {
+        let id = req.params.id
+
+        if( id ) {
+            let entity = await this.entity.findOne({
+                where: {
+                    id: id
+                }
+            })
+            entity = entity.dataValues
+
+            entity.status = !entity.status
+            await this.entity.update(entity, {
+                where: {
+                    id: entity.id
+                }
+            })
+            res.json(entity)
+
+        }
+
+        return res
+    }
+
     async _prepareNew() {
         return await new this.entity()
     }
 
     async _prepareEdit( id ) {
-        return await this.entity.findAll({ where: { id: id}})
+        let entity = await this.entity.findOne({ 
+            where: { 
+                id: id
+            }
+        })
+
+        return entity.dataValues
     }
+
 }
 
 export default Crud
