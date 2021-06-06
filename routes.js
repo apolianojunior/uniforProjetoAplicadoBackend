@@ -8,6 +8,7 @@ import RestaurantController from "./Model/Restaurant/RestaurantController.js";
 import TableController from "./Model/Table/TableController.js";
 import WaiterController from "./Model/Waiter/WaiterController.js";
 import CategoryController from "./Model/Category/CategoryController.js";
+import AuthController from "./Model/Auth/AuthController.js"
 import User from "./Model/User/User.js";
 import FeedbackController from "./Model/Feedback/FeedbackController.js";
 import multer from "multer";
@@ -42,48 +43,9 @@ function auth(req, res, next) {
     }
 }
 
-//USER
-routes.post("/signin", async (req, res) => {
-    let {email, password} = req.body
-    if( email == undefined ) {
-        res.status(400)
-        res.json({ err: "Email inválido"})
-    } else {
-        const user = await User.findAll({ where: { email: email }})
-
-        if(user.length == 0) {
-            res.status(404)
-            res.json("Usuário não encontrado")
-        } else {
-            if( user[0].password == password) {
-                jwt.sign({ id: user[0].id, email: user[0].email}, JWTSecret, {expiresIn: '12h'}, (err, token) => {
-                    if (err) {
-                        res.status(400)
-                        res.json({err: "Falha Interna"})
-                    } else {
-                        console.log(token)
-                        res.status(200)
-                        res.json({
-                            status: "sucess",
-                            user: {
-                                id: user[0].id,
-                                nome: user[0].nome,
-                                email: user[0].email,
-                                createdAt: user[0].createdAt,
-                                updatedAt: user[0].updatedAt
-                            } ,
-                            accessToken: token
-                        })
-                    }
-                })
-            } else {
-                res.status(404)
-                res.json("Senha inválida")
-            }
-        }
-    }
-})
-
+//Login - Autorization and Authentication
+routes.post("/signin", AuthController.signin.bind(AuthController))
+routes.post("/Users", AuthController.register.bind(AuthController))
 
 //Waiter Controller
 routes.get("/Waiters", WaiterController.search.bind(WaiterController));
